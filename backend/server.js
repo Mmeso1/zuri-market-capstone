@@ -4,7 +4,7 @@ const cors = require("cors");
 const products = require("./data/products");
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 const API_SECRET_KEY = process.env.API_SECRET_KEY;
 const STORE_NAME = process.env.STORE_NAME || "My Store";
 
@@ -14,7 +14,9 @@ app.use(express.json());
 const validateApiKey = (req, res, next) => {
   const key = req.headers["x-api-key"];
   if (!key || key !== API_SECRET_KEY) {
-    return res.status(401).json({ error: "Unauthorized: invalid or missing API key" });
+    return res
+      .status(401)
+      .json({ error: "Unauthorized: invalid or missing API key" });
   }
   next();
 };
@@ -50,7 +52,8 @@ app.post("/api/cart/validate", validateApiKey, (req, res) => {
 
   const validated = items.map((item) => {
     const product = products.find((p) => p.id === item.id);
-    if (!product) return { id: item.id, valid: false, reason: "Product not found" };
+    if (!product)
+      return { id: item.id, valid: false, reason: "Product not found" };
     if (product.stock < item.quantity)
       return { id: item.id, valid: false, reason: "Insufficient stock" };
     return {
