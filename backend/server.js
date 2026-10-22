@@ -4,7 +4,7 @@ const cors = require("cors");
 const products = require("./data/products");
 
 const app = express();
-const PORT = process.env.PORT || 5001;
+const PORT = process.env.PORT || 5000;
 const API_SECRET_KEY = process.env.API_SECRET_KEY;
 const STORE_NAME = process.env.STORE_NAME || "My Store";
 
@@ -20,6 +20,32 @@ const validateApiKey = (req, res, next) => {
   }
   next();
 };
+
+const client = require("prom-client");
+client.collectDefaultMetrics();
+const httpDuration = new client.Histogram({
+  name: "http_request_duration_seconds",
+  help: "HTTP request duration in seconds",
+  labelNames: ["method", "route", "status_code"],
+  buckets: [0.01, 0.05, 0.1, 0.3, 0.5, 1, 2, 5],
+});
+
+app.use((req, res, next) => {
+  const stop = httpDuration.startTimer();
+  res.on("finish", () => {
+    const route = req.route ? req.baseUrl + req.route.path : "unmatched";
+    stop({ method: req.method, route, status_code: res.statusCode });
+  });
+  next();
+});
+
+app.get("/api/health", (_req, res) => res.json({ status: "ok" }));
+
+app.get("/metrics", async (_req, res) => {
+  // not under /api, so the Ingress never exposes it
+  res.set("Content-Type", client.register.contentType);
+  res.end(await client.register.metrics());
+});
 
 // GET /api/store — store info
 app.get("/api/store", (req, res) => {
