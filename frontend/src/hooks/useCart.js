@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { calculateCartCount, calculateCartTotal } from "../utils/cart";
 
 const useCart = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -35,12 +36,9 @@ const useCart = () => {
 
   const clearCart = () => setCartItems([]);
 
-  const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+  const cartCount = calculateCartCount(cartItems);
 
-  const cartTotal = cartItems.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  );
+  const cartTotal = calculateCartTotal(cartItems);
 
   return {
     cartItems,
