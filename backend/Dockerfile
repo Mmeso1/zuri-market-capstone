@@ -3,7 +3,7 @@ ENV NODE_ENV=production
 ENV PORT=5000
 WORKDIR /app
 COPY package*.json ./
-RUN npm ci --omit=dev
+RUN npm ci --omit=dev --ignore-scripts
 COPY . .
 USER node
 EXPOSE 5000
