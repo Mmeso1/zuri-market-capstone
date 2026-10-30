@@ -36,7 +36,7 @@ const App = () => {
         setStoreName(import.meta.env.VITE_STORE_NAME || "Shop");
       }
     };
-    fetchStore();
+    void fetchStore();
   }, []);
 
   useEffect(() => {
@@ -58,7 +58,7 @@ const App = () => {
         setLoading(false);
       }
     };
-    fetchProducts();
+    void fetchProducts();
   }, [activeCategory]);
 
   return (

@@ -8,7 +8,8 @@ const PORT = process.env.PORT || 5000;
 const API_SECRET_KEY = process.env.API_SECRET_KEY;
 const STORE_NAME = process.env.STORE_NAME || "My Store";
 
-app.use(cors());
+app.disable("x-powered-by");
+app.use(cors({ origin: "http://localhost:5173" }));
 app.use(express.json());
 
 const validateApiKey = (req, res, next) => {
@@ -63,7 +64,7 @@ app.get("/api/products", (req, res) => {
 
 // GET /api/products/:id — single product
 app.get("/api/products/:id", (req, res) => {
-  const product = products.find((p) => p.id === parseInt(req.params.id));
+  const product = products.find((p) => p.id === Number.parseInt(req.params.id));
   if (!product) return res.status(404).json({ error: "Product not found" });
   res.json(product);
 });
