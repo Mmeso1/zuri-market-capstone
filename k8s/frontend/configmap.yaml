@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: frontend-nginx
+  namespace: zuri-market
+data:
+  # The Ingress routes /api to the backend, so nginx only serves the static app here.
+  default.conf: |
+    server {
+      listen 8080;
+      root /usr/share/nginx/html;
+      index index.html;
+      location / { try_files $uri /index.html; }
+    }
