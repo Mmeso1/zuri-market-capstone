@@ -17,7 +17,7 @@ spec:
       automountServiceAccountToken: false
       containers:
         - name: backend
-          image: ghcr.io/mmeso1/zuri-market-capstone-backend:sha-21330d3
+          image: ghcr.io/mmeso1/zuri-market-capstone-backend:sha-6e797db
           ports:
             - name: http
               containerPort: 5000
