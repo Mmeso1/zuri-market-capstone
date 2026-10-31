@@ -10,7 +10,8 @@ RUN npm ci --omit=dev --ignore-scripts \
  && rm -rf /usr/local/lib/node_modules /usr/local/bin/npm /usr/local/bin/npx \
            /usr/local/bin/corepack /usr/local/bin/yarn /usr/local/bin/yarnpkg /opt/yarn-* \
  && apk upgrade --no-cache
-COPY . .
+COPY server.js ./
+COPY data ./data
 USER node
 EXPOSE 5000
 CMD ["node", "server.js"]
