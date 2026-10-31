@@ -195,6 +195,19 @@ See [docs/jenkins-vs-github-actions.md](docs/jenkins-vs-github-actions.md).
 
 ## 12. Evidence and one thing I would do differently
 
+All screenshots are in [docs/evidence/](docs/evidence/) (AWS account ID redacted):
+
+| Area | Folder |
+|---|---|
+| Repository and Git | [01-repo-and-git](docs/evidence/01-repo-and-git/) |
+| Docker and Compose | [02-docker](docs/evidence/02-docker/) |
+| Terraform | [03-terraform](docs/evidence/03-terraform/) |
+| CI/CD | [04-ci-cd](docs/evidence/04-ci-cd/) |
+| Security | [05-security](docs/evidence/05-security/) |
+| Kubernetes | [06-kubernetes](docs/evidence/06-kubernetes/) |
+| Monitoring | [07-monitoring](docs/evidence/07-monitoring/) |
+| Health check | [08-health-check](docs/evidence/08-health-check/) |
+
 Evidence (screenshots) covers: the ruleset and merged pull requests; Terraform plan/apply,
 module folders and the state file in S3; Docker images and Compose; a green and a red
 pipeline run, SonarQube and Trivy output, images in GHCR; `kubectl get pods,svc,ingress`,
